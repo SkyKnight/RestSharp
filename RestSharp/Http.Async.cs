@@ -377,10 +377,11 @@ namespace RestSharp
 		private HttpWebRequest ConfigureAsyncWebRequest(string method, Uri url)
 		{
 #if SILVERLIGHT
-			WebRequest.RegisterPrefix("http://", WebRequestCreator.ClientHttp);
-			WebRequest.RegisterPrefix("https://", WebRequestCreator.ClientHttp);
+			var webRequest = WebRequest.CreateHttp(url);
 #endif
+#if !SILVERLIGHT
 			var webRequest = (HttpWebRequest)WebRequest.Create(url);
+#endif
 #if !PocketPC
 			webRequest.UseDefaultCredentials = UseDefaultCredentials;
 #endif
